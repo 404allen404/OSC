@@ -1,10 +1,14 @@
+void _start() __attribute__((section(".text")));
+
 extern unsigned long __bss_start;
 extern unsigned long __bss_end;
 extern unsigned long __stack_top;
 
-void bootloader () {
+void _start () {
 
   // Set the stack pointer
+  asm volatile ("ldr x0, =_start");
+  asm volatile ("mov sp, x0");
 
   // Initialize the bss segment
   unsigned long *bss_ptr = &__bss_start;
@@ -13,10 +17,6 @@ void bootloader () {
       ++bss_ptr;
   }
 
-}
-
-void _start () {
-
-  bootloader();
+  while(1);
 
 }
