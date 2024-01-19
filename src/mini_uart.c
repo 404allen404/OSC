@@ -48,16 +48,17 @@ unsigned char mini_uart_read () {
 }
 
 void mini_uart_write (unsigned char c) {
-  
-  while (!(*(unsigned int *)AUX_MU_LSR_REG & 0x20));
-  *(unsigned char *)AUX_MU_IO_REG = c;
 
   //'\r' represent enter
   //'\n' represent change line
   if (c == '\r') {
     while (!(*(unsigned int *)AUX_MU_LSR_REG & 0x20));
     mini_uart_display("\n# ");
+    return;
   }
+
+  while (!(*(unsigned int *)AUX_MU_LSR_REG & 0x20));
+  *(unsigned char *)AUX_MU_IO_REG = c;
 
 }
 
