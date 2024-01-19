@@ -4,6 +4,7 @@ SECTIONS
 
   .text :
   {
+    *(.text._start)
     *(.text)
   }
 
@@ -18,5 +19,5 @@ SECTIONS
     *(.bss)
     __bss_end = ALIGN(0x10);
   }
-
+  
 }
