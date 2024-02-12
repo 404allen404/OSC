@@ -1,5 +1,6 @@
 #include "mailbox.h"
 #include "mini_uart.h"
+#include "string.h"
 #include <stdio.h>
 
 void get_board_revision() {
@@ -17,8 +18,12 @@ void get_board_revision() {
   mailbox_call(mailbox);           //message passing procedure call
   
   mini_uart_display("Get board revision\n");
-  //it should be 0xa020d3 for rpi3 b+
-  //printf("  board revision: 0x%x\n", mailbox[5]);
+  mini_uart_display("  board revision: 0x");
+
+  unsigned char hex_str[9];
+  uint_to_str(mailbox[5], hex_str, 16);
+  mini_uart_display(hex_str);
+  mini_uart_write('\n');
 }
 
 void get_arm_memory() {
@@ -37,8 +42,17 @@ void get_arm_memory() {
   mailbox_call(mailbox);           //message passing procedure call
 
   mini_uart_display("Get ARM memoey\n");
-  //printf("  base address in bytes: 0x%x\n", mailbox[5]);
-  //printf("  size in bytes: %u\n", mailbox[6]);
+
+  unsigned char hex_str[9];
+  uint_to_str(mailbox[5], hex_str, 10);
+  mini_uart_display("  base address in bytes: ");
+  mini_uart_display(hex_str);
+  mini_uart_write('\n');
+
+  uint_to_str(mailbox[6], hex_str, 10);
+  mini_uart_display("  size in bytes: ");
+  mini_uart_display(hex_str);
+  mini_uart_write('\n');
 }
 
 void mailbox_call(unsigned int* mailbox) {

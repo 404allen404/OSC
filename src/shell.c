@@ -2,20 +2,16 @@
 #include "mini_uart.h"
 #include "string.h"
 
-void parse_buf (unsigned char *buf) {
+void parse_buf(unsigned char *buf) {
 
-  unsigned char *help     = "help";
-  unsigned char *hello    = "hello";
-  unsigned char *reboot   = "reboot";
-
-  if (str_cmp(buf, help)) {
+  if (str_cmp(buf, "help")) {
     mini_uart_display("\nhelp   : print this help menu\n");
     mini_uart_display("hello  : print Hello World!\n");
     mini_uart_display("reboot : reboot the device\n");
     return;
   }
 
-  if (str_cmp(buf, hello)) {
+  if (str_cmp(buf, "hello")) {
     mini_uart_display("\nHello World!\n");
     return;
   }
@@ -25,7 +21,7 @@ void parse_buf (unsigned char *buf) {
 }
 
 
-void shell_start () {
+void shell_start() {
   
   unsigned int buf_p = 0;
   unsigned char user_input_buf[100];
@@ -42,8 +38,8 @@ void shell_start () {
       }
 
       if (user_input == '\r' && buf_p == 0) {
-        mini_uart_write(user_input);
-        continue;
+        mini_uart_write('\n');
+        break;
       }
 
       if (user_input == '\r' && buf_p != 0) {
