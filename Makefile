@@ -33,8 +33,12 @@ all: $(KERNEL)
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	$(CC) $(INC_FLAGS) -nostartfiles -c $< -o $@
 
+$(OBJ_DIR):
+	mkdir $@
+
+
 # Rule to link object files into kernel binary
-$(KERNEL): $(OBJ)
+$(KERNEL): $(OBJ_DIR) $(OBJ)
 	$(LD) -T $(LINKER_SCRIPT) -o kernel8.elf $(OBJ)
 	$(OBJCOPY) -O binary kernel8.elf $@
 
@@ -51,4 +55,4 @@ gdb:
 	$(GDB)
 
 clean:
-	rm -f $(OBJ) kernel8.elf $(KERNEL)
+	rm -rf $(OBJ) kernel8.elf $(KERNEL) $(OBJ_DIR)

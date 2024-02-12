@@ -1,7 +1,7 @@
 #include "mini_uart.h"
 #include "gpio.h"
 
-void mini_uart_init () {
+void mini_uart_init() {
 
   *(unsigned int *)AUXENB          = 1;   //Enable mini UART
   *(unsigned int *)AUX_MU_CNTL_REG = 0;   //Disable transmitter and receiver
@@ -40,14 +40,14 @@ void mini_uart_init () {
 
 }
 
-unsigned char mini_uart_read () {
+unsigned char mini_uart_read() {
 
   while (!(*(unsigned int *)AUX_MU_LSR_REG & 0x1));
   return *(unsigned char *)AUX_MU_IO_REG;
 
 }
 
-void mini_uart_write (unsigned char c) {
+void mini_uart_write(unsigned char c) {
 
   //'\r' represent enter
   //'\n' represent change line
@@ -62,7 +62,7 @@ void mini_uart_write (unsigned char c) {
 
 }
 
-void mini_uart_display (unsigned char *s) {
+void mini_uart_display(unsigned char* s) {
   
   while (*s) {
     mini_uart_write(*s);

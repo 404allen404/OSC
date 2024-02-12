@@ -11,9 +11,9 @@
 #define AUX_MU_CNTL_REG 0x3F215060
 #define AUX_MU_BAUD     0x3F215068
 
-void mini_uart_init ();
-unsigned char mini_uart_read ();
-void mini_uart_write (unsigned char c);
-void mini_uart_display(unsigned char *s);
+void mini_uart_init();
+unsigned char mini_uart_read();
+void mini_uart_write(unsigned char c);
+void mini_uart_display(unsigned char* s);
 
 #endif
